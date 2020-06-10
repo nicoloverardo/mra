@@ -1169,7 +1169,9 @@ namespace MusicReleaseAnalyzer
                 List<string> releasedSongs = new HashSet<string>(Releases.SelectMany(x => x.Songs)).ToList();
 
                 await PrepareLayout(releasedSongs.Count, "Getting iTunes Library");
-                List<Track> itunesTracks = await ITunesLibrary.ParseAsync(dialog.FileName, token);
+
+                var library = new ITunesLibrary(dialog.FileName);
+                List<Track> itunesTracks = library.Tracks.ToList();
 
                 int counter = 0;
                 await Task.Run(async () =>
@@ -1222,7 +1224,7 @@ namespace MusicReleaseAnalyzer
                                 trackArtist.Add(track.Artist);
                             }
 
-                            if (releasedSongTitle == track.Title)
+                            if (releasedSongTitle == track.Name)
                             {
                                 if (trackArtist.Count == releaseArtist.Count)
                                 {
@@ -1513,7 +1515,9 @@ namespace MusicReleaseAnalyzer
 
                 List<string> releasedSongs = new HashSet<string>(Releases.SelectMany(x => x.Songs)).ToList();
                 var extSongsList = await GetDictionaryAsync(extListPath, token);
-                List<Track> itunesTracks = await ITunesLibrary.ParseAsync(iTunesXmlPath, token);
+
+                var library = new ITunesLibrary(dialog.FileName);
+                List<Track> itunesTracks = library.Tracks.ToList();
 
                 await PrepareLayout(releasedSongs.Count, "Getting songs lists ready");
 
@@ -1565,7 +1569,7 @@ namespace MusicReleaseAnalyzer
                         {
                             token.ThrowIfCancellationRequested();
 
-                            exists = SongExits(track.Artist, releasedSongTitle, track.Title, releaseArtist);
+                            exists = SongExits(track.Artist, releasedSongTitle, track.Name, releaseArtist);
                         }
 
                         string editedSong = releasedSongArtist + " - " + releasedSongTitle;
