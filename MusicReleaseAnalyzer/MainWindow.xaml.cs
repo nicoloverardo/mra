@@ -1594,6 +1594,42 @@ namespace MusicReleaseAnalyzer
             await CleanupLayout();
         }
 
+        private async void addArtistMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string pathArtists = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\artists.txt";
+            var artists = await GetArtistsFinalList(await ReadDataFromFileAsync(pathArtists, new CancellationToken()), new CancellationToken());
+
+            appendLabelOrArtist(pathArtists, artists, false);
+        }
+        private async void addLabelMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string pathLabels = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\labels.txt";
+            var labels = await ReadDataFromFileAsync(pathLabels, new CancellationToken());
+
+            appendLabelOrArtist(pathLabels, labels, true);
+        }
+
+        private void appendLabelOrArtist(string path, List<string> list, bool isLabel)
+        {
+            if (releasesListView.SelectedItems.Count == 0) return;
+
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                var selected = releasesListView.SelectedItems.Cast<Release>().ToList();
+                foreach (Release item in selected)
+                {
+                    if (isLabel)
+                    {
+                        if (!list.Contains(item.Label)) sw.WriteLine(item.Label);
+                    }
+                    else
+                    {
+                        if (!list.Contains(item.Artist)) sw.WriteLine(item.Artist);
+                    }
+                }
+            }
+        }
+
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + "\r\n\r\nIcon made by Smashicons from www.flaticon.com", "About Taggify", MessageBoxButton.OK, MessageBoxImage.Information);

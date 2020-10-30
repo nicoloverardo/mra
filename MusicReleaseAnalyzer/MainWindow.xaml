@@ -48,6 +48,9 @@
                                 <Separator/>
                                 <MenuItem x:Name="discardMenuItem" Header="Discard" Click="discardMenuItem_Click"/>
                                 <Separator/>
+                                <MenuItem x:Name="addArtistMenuItem" Header="Add artist to list" Click="addArtistMenuItem_Click"/>
+                                <MenuItem x:Name="addLabelMenuItem" Header="Add label to list" Click="addLabelMenuItem_Click"/>
+                                <Separator/>
                                 <MenuItem x:Name="copyLinkMenuItem" Header="Copy link" Click="copyLinkMenuItem_Click"/>
                                 <MenuItem x:Name="saveLinksMenuItem" Header="Save links..." Click="saveLinksMenuItem_Click"/>
                             </ContextMenu>
