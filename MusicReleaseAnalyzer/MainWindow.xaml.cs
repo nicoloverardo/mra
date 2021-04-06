@@ -225,7 +225,7 @@ namespace MusicReleaseAnalyzer
                 date = System.Web.HttpUtility.HtmlDecode(parentNode?.SelectNodes("//div[@class='short-info']").FirstOrDefault()?.SelectNodes("//span[@class='icon icon-calendar']").FirstOrDefault()?.InnerText);
 
                 // Cover link
-                coverLink = "http://techdeephouse.com" + parentNode?.SelectNodes("//div[@class='poster']").FirstOrDefault()?.Descendants("img").FirstOrDefault()?.Attributes["src"].Value;
+                coverLink = "https://musicfans.space" + parentNode?.SelectNodes("//div[@class='poster']").FirstOrDefault()?.Descendants("img").FirstOrDefault()?.Attributes["src"].Value;
 
                 // Get a list of the child nodes that hold the release properties
                 subParentNodeList = parentNode?.SelectNodes("//div[@class='maincont']").FirstOrDefault()?.SelectNodes("//div[@style='word-spacing: 1.1px;']").ToList();
@@ -1019,7 +1019,7 @@ namespace MusicReleaseAnalyzer
                             // Get the album artwork link if available
                             if (item.Descendants("a").FirstOrDefault(x => x.HasAttributes && x.Attributes["class"].Value == "image-box")?.Descendants("img").FirstOrDefault() != null)
                             {
-                                coverLink = "http://techdeephouse.com" + item.Descendants("a").FirstOrDefault(x => x.HasAttributes && x.Attributes["class"].Value == "image-box")?.Descendants("img").FirstOrDefault()?.Attributes["src"].Value;
+                                coverLink = "https://musicfans.space" + item.Descendants("a").FirstOrDefault(x => x.HasAttributes && x.Attributes["class"].Value == "image-box")?.Descendants("img").FirstOrDefault()?.Attributes["src"].Value;
                             }
 
                             // Get a list of the child nodes that hold the release properties
